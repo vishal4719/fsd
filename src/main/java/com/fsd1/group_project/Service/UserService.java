@@ -18,7 +18,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
     public void saveNewUser(User user) {
         // Password is already encoded in UserController
-        user.setRoles(Arrays.asList("USER"));
+        user.setRoles(String.valueOf(Arrays.asList("USER")));
         userRepository.save(user);
     }
 

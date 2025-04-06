@@ -59,12 +59,12 @@ public class PublicController {
            userService.saveNewUser(user);
            return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message","User Registered Succesfully"));
         }catch (Exception e){
-            e.printStackTrace(); // Add this to see full error in console
+            e.printStackTrace(); 
+            
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
 
     }
-    // Add this debugging code to your login method
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
@@ -77,8 +77,6 @@ public class PublicController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body(Map.of("error", "User not found"));
             }
-
-            // If user exists, try authentication
             try {
                 Authentication authentication = authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(
@@ -94,11 +92,9 @@ public class PublicController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body(Map.of("error", "Authentication failed: " + authEx.getMessage()));
             }
-
-            // Continue with token generation if authentication passes
             String token = jwtUtils.generateToken(loginRequest.getEmail());
             User user = optionalUser.get();
-            List<String> role = user.getRoles();
+            String role = user.getRoles();
 
             System.out.println("Login successful for email: " + loginRequest.getEmail());
 

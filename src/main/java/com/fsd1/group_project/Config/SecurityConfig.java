@@ -18,7 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true) // Enable method-level security
 public class SecurityConfig {
 
     @Autowired
@@ -40,8 +39,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disable CSRF protection
-                .cors(cors -> cors.disable()) // Disable CORS (configure if needed)
+                .csrf(csrf -> csrf.disable()) 
+                .cors(cors -> cors.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/dashboard/**").authenticated() 
